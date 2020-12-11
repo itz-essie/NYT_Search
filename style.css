@@ -1,0 +1,15 @@
+.jumbotronStyles {
+    background-color: darkblue;
+    padding-bottom: 100px;
+    padding-top: 100px;
+    margin-left: 25px;
+    margin-right: 25px;
+    color: white;
+  }
+  .formStyles {
+    border: 1px solid grey;
+  }
+  .headerStyles {
+    background-color: lightgrey;
+    padding-bottom: 20px;
+  }

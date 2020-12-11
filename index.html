@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>New York Times Search</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="jumbotron" style="background-color: #20315A ; color: white;">
+        <h1 class="text-center">
+            <i class="fa fa-newspaper-o"></i> New York Times Search
+        </h1>
+      </div>
+    <form class = " formStyles">
+        <div class="form-group">
+        <h4 class="headerStyles"><i class="fa fa-calendar"></i><b>Search Parameters</b></h4>
+        <hr></hr>
+          <label for="exampleFormControlInput1"><b>Search Term:</b></label>
+          <input type="email" class="form-control" id="search-term" placeholder="enter search term here">
+        <div class="form-group">
+            <label for="exampleFormControlInput1"><b>Number of Records to Retrieve:</b></label>
+            <input type="email" class="form-control" id="number-records" placeholder="enter number of records to retrieve">
+        <div class="form-group">
+            <label for="exampleFormControlInput1"><b>Start Year (Optional):</b></label>
+            <input type="email" class="form-control" id="start-year" placeholder="enter start year (this is optional)">
+        <div class="form-group">
+            <label for="exampleFormControlInput1"><b>End Year (Optional):</b></label>
+            <input type="email" class="form-control" id="end-year" placeholder="enter end year (this is optional)">
+        <br></br>
+        <button type="button" class="btn btn-light" id = "searchBtn"><i class="fa fa-search"></i>Search</button>
+        <button type="button" class="btn btn-light" id = "clearBtn"><i class="fa fa-trash"></i>Clear Results</button> 
+    </form>
+    <form>
+        <div class="form-group headerStyles">
+        <br></br>
+        <h4><i class="fa fa-calendar"></i><b>Top Articles</b><h4>
+        <hr></hr>
+        <div id="search-results"></div> 
+    </form>
+    <script>
+var startDate = $("#start-year").val();
+var endDate = $("#end-year").val();
+var searchInput = $("#search-term").val();
+var queryUrl =
+  "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" +
+  searchInput +
+  "begin_date=" +
+  startDate +
+  "&end_date=" +
+  endDate +
+  "&api-key=tsI8XyTc5YSpuiBkiyG0u7wHXN1blAFu";
+$("#searchBtn").click(function () {
+  $.ajax({
+    url: queryUrl,
+    method: "GET",
+    success: function (result) {
+      var articleDiv = $("<div>").attr("class", "container");
+      var articles = result.response.docs;
+      console.log(articles);
+      for (var i = 0; i < articles.length; i++) {
+        var newArticleTitle = $("<h6>").append(articles[i].headline.main);
+        var articleLink = $("<p>").append(articles[i].web_url);
+        newArticleTitle.append(articleLink);
+        articleDiv.prepend(newArticleTitle);
+      }
+      $("#search-results").append(articleDiv);
+    },
+  });
+  alert("button clicked");
+});
+    </script>
+  </body>
+</html>
